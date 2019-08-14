@@ -1,9 +1,23 @@
-## redux-saga集成taro
+## taro中集成redux-saga
 > taro中redux处理方案是采用redux-thunk,这里采用[redux-saga](https://redux-saga.js.org/)解决异步问题，*引入目前最新redux-saga@1.0.5*
 
-#### redux-saga-seed
-- 可以按照本例自己进行引入
-- 也可以直接下载该种子项目，已经引入了saga相关
+#### 引入方式一
+可以直接下载种子项目，已经引入了saga，并做好了相关配置，可再次基础上再次开发
+[taro-redux-saga-seed](https://github.com/Z-HNAN/taro-redux-saga-seed)
+```shell
+// 下载种子项目
+git clone https://github.com/Z-HNAN/taro-redux-saga-seed
+
+// 安装依赖
+cd taro-redux-saga-seed
+npm i 
+
+// 启动项目-小程序(微信开发者工具查看效果，有一个3s延迟的add示例)
+npm run dev:weapp
+```
+
+#### 引入方式二
+在自己已经有的项目上引入，按照后续步骤自行引入即可
 
 #### 安装redux-saga
 ```shell
@@ -56,11 +70,11 @@ export default function* () {
 ```js
 import { all } from 'redux-saga/effects'
 
-import indexSaga from '../pages/index/saga'
+import index from '../pages/index/saga'
 
 export default function* () {
   yield all([
-    indexSaga()
+    index()
   ])
 }
 
@@ -74,6 +88,7 @@ export default function* () {
 
 ```js
 import { createStore, applyMiddleware, compose } from 'redux'
+/* 引入saga */
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './saga'
 import rootReducer from './reducer'
@@ -85,10 +100,11 @@ const composeEnhancers =
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
     }) : compose
 
-/* 处理redux-saga */
+/* 生成sagaMiddleware */
 const sagaMiddleware = createSagaMiddleware();
 
 const middlewares = [
+  /* 应用saga */
   sagaMiddleware
 ]
 
@@ -104,13 +120,14 @@ const enhancer = composeEnhancers(
 
 export default function configStore () {
   const store = createStore(rootReducer, enhancer)
+  /* 启动saga */
   sagaMiddleware.run(rootSaga)
   return store
 }
 
 ```
 
-#### 检测saga
+#### 检测
 - `pages/index/index.jsx` 本例以taro的redux为基础进行测试
 
 ```js
