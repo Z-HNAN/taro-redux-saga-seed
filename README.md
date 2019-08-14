@@ -2,7 +2,7 @@
 > taro中redux处理方案是采用redux-thunk,这里采用[redux-saga](https://redux-saga.js.org/)解决异步问题，*引入目前最新redux-saga@1.0.5*
 
 #### 引入方式一
-可以直接下载种子项目，已经引入了saga，并做好了相关配置，可再次基础上再次开发
+可以直接下载种子项目，已经引入了saga，并做好了相关配置，可在此基础上再次开发
 [taro-redux-saga-seed](https://github.com/Z-HNAN/taro-redux-saga-seed)
 ```shell
 // 下载种子项目
